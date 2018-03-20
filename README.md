@@ -3,6 +3,17 @@ spark--NaverSentimentMovieCorpus
 
 네이버 영화 댓글의 감성 데이터를 통해서 댓글로 감성을 예측해보는 모델을 만들어보자,
 
+  0.분석 환경
+  ----------
+        1-1 하둡 클러스터(의사 분산모드)
+         > version:2.9.0
+         > master: yarn-client
+         > memory: 11GB
+        1-2 spark
+         > version: 2.2.0
+        1-3 zeppelin
+         > version: 0.7.3
+
 
 데이터 출처:https://github.com/e9t/nsmc (ratings.txt) 
 
