@@ -26,12 +26,17 @@ spark--NaverSentimentMovieCorpus
 
 2.코드 및 분석 결과 보기
 -----------------------
+1. [결측값 제거 및 training data에 대한 PipelineModel생성](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/fde3f1b5903245f08a4daf2f1ae4da8d)
+  
+  
+2. [(동사, 명사, 모든 형태소, 동사 및 명사)에 대한 모델 평가](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/ed192cf60a484c219cd2f05a299d9ae0)
 
-  *[결측값 제거 및 training data에 대한 PipelineModel생성](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/fde3f1b5903245f08a4daf2f1ae4da8d)
-   
-  *[(동사, 명사, 모든 형태소, 동사 및 명사)에 대한 모델 평가](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/ed192cf60a484c219cd2f05a299d9ae0)
-  *[새로운 테스트 데이터 적용](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/06079d1cc79f41408898ee5f51358a50)
-  *[새로운 트레이닝 데이터 적용](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/7df36a2b73a24203b6faee3f8333a3c5)
-  *[TF-IDF  Logistic Regression 적용 및 평가](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/c30aca98718146cbb13698044bfd9225)
+3. [새로운 테스트 데이터 적용](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/06079d1cc79f41408898ee5f51358a50)
+  
+  
+4. [새로운 트레이닝 데이터 적용](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/7df36a2b73a24203b6faee3f8333a3c5)
+  
+  
+5. [TF-IDF  Logistic Regression 적용 및 평가](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/c30aca98718146cbb13698044bfd9225)
   
   
