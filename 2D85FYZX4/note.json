@@ -1,0 +1,604 @@
+{
+  "paragraphs": [
+    {
+      "text": "import org.apache.spark.ml.PipelineModel",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:05:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.ml.PipelineModel\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551091244_2106788155",
+      "id": "20180320-220451_387575529",
+      "dateCreated": "Mar 20, 2018 10:04:51 PM",
+      "dateStarted": "Mar 20, 2018 10:05:10 PM",
+      "dateFinished": "Mar 20, 2018 10:06:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 새로운 test 데이터를 통해 기존의 모델이 유용한지 파악해보자",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:05:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e새로운 test 데이터를 통해 기존의 모델이 유용한지 파악해보자\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551110090_1023735325",
+      "id": "20180320-220510_1774209961",
+      "dateCreated": "Mar 20, 2018 10:05:10 PM",
+      "dateStarted": "Mar 20, 2018 10:05:54 PM",
+      "dateFinished": "Mar 20, 2018 10:05:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val test \u003d spark.read.option(\"inferSchema\", \"true\")\n                    .option(\"header\", \"true\")\n                    .option(\"sep\", \"\\t\")\n                    .csv(\"file:///home/spark/Downloads/ratings_test.txt\")\n\ntest.show\ntest.printSchema\ntest.describe().show",
+      "user": "admin",
+      "dateUpdated": "Mar 21, 2018 9:40:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "test: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 1 more field]\n+--------+--------------------+-----+\n|      id|            document|label|\n+--------+--------------------+-----+\n| 6270596|                 굳 ㅋ|    1|\n| 9274899|GDNTOPCLASSINTHECLUB|    0|\n| 8544678|뭐야 이 평점들은.... 나쁘진...|    0|\n| 6825595|지루하지는 않은데 완전 막장임....|    0|\n| 6723715|3D만 아니었어도 별 다섯 개 ...|    0|\n| 7898805|  음악이 주가 된, 최고의 음악영화|    1|\n| 6315043|             진정한 쓰레기|    0|\n| 6097171|마치 미국애니에서 튀어나온듯한 ...|    0|\n| 8932678|갈수록 개판되가는 중국영화 유치...|    0|\n| 6242223|이별의 아픔뒤에 찾아오는 새로운...|    1|\n| 7462111|    괜찮네요오랜만포켓몬스터잼밌어요|    1|\n| 8425305|한국독립영화의 한계 그렇게 아버...|    0|\n| 6900881|청춘은 아름답다 그 아름다움은 ...|    1|\n| 9629375|눈에 보이는 반전이었지만 영화의...|    1|\n| 9037756|\"\"\"스토리, 연출, 연기, 비...|    0|\n|10268521|    소위 ㅈ문가라는 평점은 뭐냐?|    1|\n| 2968565|  최고!!!!!!!!!!!!!!!!|    1|\n|10107726|발연기 도저히 못보겠다 진짜 이...|    0|\n| 6406912|                 나이스|    1|\n| 4174028|별 재미도없는거 우려먹어 ......|    0|\n+--------+--------------------+-----+\nonly showing top 20 rows\n\nroot\n |-- id: integer (nullable \u003d true)\n |-- document: string (nullable \u003d true)\n |-- label: integer (nullable \u003d true)\n\n+-------+------------------+--------------------+------------------+\n|summary|                id|            document|             label|\n+-------+------------------+--------------------+------------------+\n|  count|             38785|               38782|             38784|\n|   mean|  6725817.22941859|1.003225806451612...|0.5055435231023102|\n| stddev|2940114.3235234967|  5.5857248930327E68|0.4999757140927378|\n|    min|               601|                  !!|                 0|\n|    max|          10278058|    힛걸에, 힛걸을 위한, 힛걸의|                 1|\n+-------+------------------+--------------------+------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551153885_-941364487",
+      "id": "20180320-220553_875396710",
+      "dateCreated": "Mar 20, 2018 10:05:53 PM",
+      "dateStarted": "Mar 21, 2018 9:40:37 PM",
+      "dateFinished": "Mar 21, 2018 9:40:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n#### 결측치 제거\n",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:12:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch4\u003e결측치 제거\u003c/h4\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551360989_1709710321",
+      "id": "20180320-220920_728368568",
+      "dateCreated": "Mar 20, 2018 10:09:20 PM",
+      "dateStarted": "Mar 20, 2018 10:12:18 PM",
+      "dateFinished": "Mar 20, 2018 10:12:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nval cleanTest \u003d test.na.drop(\"any\")\ncleanTest.describe().show\ncleanTest.write.mode(\"overwrite\").parquet(\"/nsmc/table/cleanTest.parquet\")\n",
+      "user": "admin",
+      "dateUpdated": "Mar 21, 2018 9:41:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "cleanTest: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 1 more field]\n+-------+------------------+--------------------+-------------------+\n|summary|                id|            document|              label|\n+-------+------------------+--------------------+-------------------+\n|  count|             38781|               38781|              38781|\n|   mean| 6726105.611691292|1.003225806451612...| 0.5055310590237487|\n| stddev|2939867.6454639975|  5.5857248930327E68|0.49997585263607647|\n|    min|               601|                  !!|                  0|\n|    max|          10278058|    힛걸에, 힛걸을 위한, 힛걸의|                  1|\n+-------+------------------+--------------------+-------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551516533_-179994031",
+      "id": "20180320-221156_20386829",
+      "dateCreated": "Mar 20, 2018 10:11:56 PM",
+      "dateStarted": "Mar 21, 2018 9:41:41 PM",
+      "dateFinished": "Mar 21, 2018 9:41:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// label의 0 과 1의 개수 파악\ncleanTest.where(col(\"label\") \u003d\u003d\u003d 1).count\ncleanTest.where(col(\"label\") \u003d\u003d\u003d 0).count\n",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:14:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res12: Long \u003d 19605\nres13: Long \u003d 19176\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551542751_-1111239611",
+      "id": "20180320-221222_1274248540",
+      "dateCreated": "Mar 20, 2018 10:12:22 PM",
+      "dateStarted": "Mar 20, 2018 10:14:14 PM",
+      "dateFinished": "Mar 20, 2018 10:14:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### 모델 불러오기",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:14:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e모델 불러오기\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551640136_1374592385",
+      "id": "20180320-221400_1180001909",
+      "dateCreated": "Mar 20, 2018 10:14:00 PM",
+      "dateStarted": "Mar 20, 2018 10:14:53 PM",
+      "dateFinished": "Mar 20, 2018 10:14:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val tfAll \u003d PipelineModel.load(\"/nsmc/model/tf_all_model\")\nval tfN \u003d PipelineModel.load(\"/nsmc/model/tf_N_model\")\nval tfV \u003d PipelineModel.load(\"/nsmc/model/tf_V_model\")\nval tfNandV \u003d PipelineModel.load(\"/nsmc/model/tf_n_and_v_model\")\n\n",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:16:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tfAll: org.apache.spark.ml.PipelineModel \u003d pipeline_e1d482432e38\ntfN: org.apache.spark.ml.PipelineModel \u003d pipeline_5a1d3b98c171\ntfV: org.apache.spark.ml.PipelineModel \u003d pipeline_6e5f4abb092f\ntfNandV: org.apache.spark.ml.PipelineModel \u003d pipeline_b1bf0697918a\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551693454_326749275",
+      "id": "20180320-221453_1015131173",
+      "dateCreated": "Mar 20, 2018 10:14:53 PM",
+      "dateStarted": "Mar 20, 2018 10:16:49 PM",
+      "dateFinished": "Mar 20, 2018 10:17:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### 모델에 test 데이터를 적용",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:17:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e모델에 test 데이터를 적용\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551788474_-53813360",
+      "id": "20180320-221628_1448082091",
+      "dateCreated": "Mar 20, 2018 10:16:28 PM",
+      "dateStarted": "Mar 20, 2018 10:17:41 PM",
+      "dateFinished": "Mar 20, 2018 10:17:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val testAll \u003d tfAll.transform(cleanTest)\nval testN \u003d tfN.transform(cleanTest)\nval testV \u003d tfV.transform(cleanTest)\nval testNandV \u003d tfNandV.transform(cleanTest)\n",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:18:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "testAll: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntestN: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntestV: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntestNandV: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551860783_-803380838",
+      "id": "20180320-221740_708739573",
+      "dateCreated": "Mar 20, 2018 10:17:40 PM",
+      "dateStarted": "Mar 20, 2018 10:18:41 PM",
+      "dateFinished": "Mar 20, 2018 10:18:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 모델 평가",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:19:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e모델 평가\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551921540_-368721850",
+      "id": "20180320-221841_2026649213",
+      "dateCreated": "Mar 20, 2018 10:18:41 PM",
+      "dateStarted": "Mar 20, 2018 10:19:17 PM",
+      "dateFinished": "Mar 20, 2018 10:19:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\nimport org.apache.spark.ml.classification.ClassificationModel\n\n\nval evaluator \u003d new MulticlassClassificationEvaluator()\n    .setMetricName(\"accuracy\").setPredictionCol(\"prediction\").setLabelCol(\"label\")",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:20:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\nimport org.apache.spark.ml.classification.ClassificationModel\nevaluator: org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator \u003d mcEval_76b58fda72e2\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521551946388_1228765450",
+      "id": "20180320-221906_41330983",
+      "dateCreated": "Mar 20, 2018 10:19:06 PM",
+      "dateStarted": "Mar 20, 2018 10:20:22 PM",
+      "dateFinished": "Mar 20, 2018 10:20:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nval tfAllEval \u003d evaluator.evaluate(testAll)\nval tfNEval \u003d evaluator.evaluate(testN)\nval tfVEval \u003d evaluator.evaluate(testV)\nval tfNandVEval \u003d evaluator.evaluate(testNandV)",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:20:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tfAllEval: Double \u003d 0.6409066295350816\ntfNEval: Double \u003d 0.574069776436915\ntfVEval: Double \u003d 0.5427142157241949\ntfNandVEval: Double \u003d 0.6103762151569068\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521552022795_-1845085458",
+      "id": "20180320-222022_1076931629",
+      "dateCreated": "Mar 20, 2018 10:20:22 PM",
+      "dateStarted": "Mar 20, 2018 10:20:47 PM",
+      "dateFinished": "Mar 20, 2018 10:28:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val evalDF \u003d List(\n            (\"TF\", \"ALL\", \"LogisticRegression\", tfAllEval),\n            (\"TF\", \"N\", \"LogisticRegression\", tfNEval),\n            (\"TF\", \"V\", \"LogisticRegression\", tfVEval),\n            (\"TF\", \"N or V\", \"LogisticRegression\", tfNandVEval)\n        ).toDF(\"feature\", \"morpheme\", \"algorithm\", \"evaluate\")\nevalDF.createOrReplaceTempView(\"evaluate\")\n        ",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:29:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "evalDF: org.apache.spark.sql.DataFrame \u003d [feature: string, morpheme: string ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521552047754_1338372914",
+      "id": "20180320-222047_454095047",
+      "dateCreated": "Mar 20, 2018 10:20:47 PM",
+      "dateStarted": "Mar 20, 2018 10:29:04 PM",
+      "dateFinished": "Mar 20, 2018 10:29:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect * from evaluate",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:29:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "feature\tmorpheme\talgorithm\tevaluate\nTF\tALL\tLogisticRegression\t0.6409066295350816\nTF\tN\tLogisticRegression\t0.574069776436915\nTF\tV\tLogisticRegression\t0.5427142157241949\nTF\tN or V\tLogisticRegression\t0.6103762151569068\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521552499688_128380307",
+      "id": "20180320-222819_123082063",
+      "dateCreated": "Mar 20, 2018 10:28:19 PM",
+      "dateStarted": "Mar 20, 2018 10:29:30 PM",
+      "dateFinished": "Mar 20, 2018 10:29:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# 2차 결과 분석\n\n1. 테스트 데이터를 바꾸니까 모델의 성능이 급격히 떨어졌다.\n2. 가정 1: 처음 Label의 0과 1의 편차가 커서 0에 대한 학습이 약했던 것으로 보인다.\n3. 가정 2: TF 만으로는 분석이 잘 안될 것이다. IDF 까지 적용한 모델을 써보자.\n4. 가정 3: LogisticRegression 말고 다른 분류 알고리즘도 적용해보자.\n5. 보완 : evaluate 의 accuracy 부분 말고 recall, precision으로 성능 테스트를 보자.",
+      "user": "admin",
+      "dateUpdated": "Mar 20, 2018 10:35:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1521552570173_735037377",
+      "id": "20180320-222930_443804039",
+      "dateCreated": "Mar 20, 2018 10:29:30 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/nsmc/new_testData",
+  "id": "2D85FYZX4",
+  "angularObjects": {
+    "2DAKZ4JFV:shared_process": [],
+    "2D8UPKGZ2:shared_process": [],
+    "2D7Q7VD92:shared_process": [],
+    "2D7TAA1C6:shared_process": [],
+    "2DA3VREDC:shared_process": [],
+    "2D9R4PBAQ:shared_process": [],
+    "2D94JT64U:shared_process": [],
+    "2DA2EUF23:shared_process": [],
+    "2D89A9FT6:shared_process": [],
+    "2D9BS92K4:shared_process": [],
+    "2D92T4AJW:shared_process": [],
+    "2D7RB1S8H:shared_process": [],
+    "2DA7G17QK:shared_process": [],
+    "2D7TVXK1B:shared_process": [],
+    "2DBABNZRX:shared_process": [],
+    "2DAK1PD75:shared_process": [],
+    "2D7TJDCJH:shared_process": [],
+    "2DA2KF3JQ:shared_process": [],
+    "2DA3DUDW2:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
