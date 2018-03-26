@@ -38,5 +38,10 @@ spark--NaverSentimentMovieCorpus
   
   
 5. [TF-IDF  Logistic Regression 적용 및 평가](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/c30aca98718146cbb13698044bfd9225)
+
+
+6. [word2Vec, SVM, NaiveBayes 모델 ](https://www.zepl.com/UHMK7RFW2/spaces/SKIX7089H/8f0a2618c09842aba123cc331cfb01d9)
+
+
   
   
