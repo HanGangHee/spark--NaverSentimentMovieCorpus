@@ -1,0 +1,1044 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md \n# 새로운 모델 테스트\n1. TF -\u003e NaiveBayes\n2. TF -\u003e SVM\n3. TF-IDF -\u003e NaiveBayes\n4. TF-IDF -\u003e SVM\n5. Word2Vec(vectorSize \u003d 300) -\u003e LogisticRegression\n6. Word2Vec(vectorSize \u003d 300) -\u003e SVM\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 8:32:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003e새로운 모델 테스트\u003c/h1\u003e\n\u003col\u003e\n  \u003cli\u003eTF -\u0026gt; NaiveBayes\u003c/li\u003e\n  \u003cli\u003eTF -\u0026gt; SVM\u003c/li\u003e\n  \u003cli\u003eTF-IDF -\u0026gt; NaiveBayes\u003c/li\u003e\n  \u003cli\u003eTF-IDF -\u0026gt; SVM\u003c/li\u003e\n  \u003cli\u003eWord2Vec(vectorSize \u003d 300) -\u0026gt; LogisticRegression\u003c/li\u003e\n  \u003cli\u003eWord2Vec(vectorSize \u003d 300) -\u0026gt; SVM\u003c/li\u003e\n\u003c/ol\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521857586945_1042013222",
+      "id": "20180324-111306_1114789775",
+      "dateCreated": "Mar 24, 2018 11:13:06 AM",
+      "dateStarted": "Mar 26, 2018 8:32:01 PM",
+      "dateFinished": "Mar 26, 2018 8:32:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### import 및, 데이터 load",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eimport 및, 데이터 load\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521858184628_470883866",
+      "id": "20180324-112304_1640170215",
+      "dateCreated": "Mar 24, 2018 11:23:04 AM",
+      "dateStarted": "Mar 26, 2018 7:27:40 PM",
+      "dateFinished": "Mar 26, 2018 7:27:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.github.uosdmlab.nkp.Tokenizer\nimport org.apache.spark.ml.feature.{CountVectorizer, HashingTF, IDF, Word2Vec}\nimport org.apache.spark.ml.classification.{NaiveBayes, LinearSVC}\nimport org.apache.spark.ml.{Pipeline, PipelineModel}\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\n\nval training \u003d spark.read.parquet(\"/nsmc/table/cleanTraining.parquet\")\nval test \u003d spark.read.parquet(\"/nsmc/table/cleanTest.parquet\")\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import com.github.uosdmlab.nkp.Tokenizer\nimport org.apache.spark.ml.feature.{CountVectorizer, HashingTF, IDF, Word2Vec}\nimport org.apache.spark.ml.classification.{NaiveBayes, LinearSVC}\nimport org.apache.spark.ml.{Pipeline, PipelineModel}\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\ntraining: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 1 more field]\ntest: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521856877199_-359288768",
+      "id": "20180324-110117_1660987815",
+      "dateCreated": "Mar 24, 2018 11:01:17 AM",
+      "dateStarted": "Mar 26, 2018 7:27:39 PM",
+      "dateFinished": "Mar 26, 2018 7:27:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 1. TF -\u003e NaiveBayes",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e1. TF -\u0026gt; NaiveBayes\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521858153607_1999244415",
+      "id": "20180324-112233_1351520817",
+      "dateCreated": "Mar 24, 2018 11:22:33 AM",
+      "dateStarted": "Mar 26, 2018 7:27:40 PM",
+      "dateFinished": "Mar 26, 2018 7:27:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val tokenizer \u003d new Tokenizer()\n    .setInputCol(\"document\")\n    .setOutputCol(\"words\")\n    .setFilter(\"N\", \"V\", \"M\", \"VCP\", \"VCN\")// 명사, 수식어, 긍정 지정사. 부정 지정사. 동사\n    \n//tf 용\nval countVectorizer \u003d new CountVectorizer()\n    .setInputCol(\"words\")\n    .setOutputCol(\"features\")\n\n//idf 용\nval countVectorizer2 \u003d new CountVectorizer()\n    .setInputCol(\"words\")\n    .setOutputCol(\"rawFeatures\")\n    \nval naive \u003d new NaiveBayes()\n\nval pipeline1 \u003d new Pipeline().setStages(Array(tokenizer, countVectorizer, naive))\nval model1 \u003d pipeline1.fit(training)\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tokenizer: com.github.uosdmlab.nkp.Tokenizer \u003d nkp_t_8193cbf33966\ncountVectorizer: org.apache.spark.ml.feature.CountVectorizer \u003d cntVec_69564c6642c4\ncountVectorizer2: org.apache.spark.ml.feature.CountVectorizer \u003d cntVec_3578efbf01f9\nnaive: org.apache.spark.ml.classification.NaiveBayes \u003d nb_2d9970ee344d\npipeline1: org.apache.spark.ml.Pipeline \u003d pipeline_40a6b1613710\nmodel1: org.apache.spark.ml.PipelineModel \u003d pipeline_40a6b1613710\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521858330172_-1774694605",
+      "id": "20180324-112530_533219636",
+      "dateCreated": "Mar 24, 2018 11:25:30 AM",
+      "dateStarted": "Mar 26, 2018 7:27:40 PM",
+      "dateFinished": "Mar 26, 2018 7:32:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nmodel1.transform(training).select(\"label\", \"words\",\"prediction\").show\nmodel1.write.overwrite().save(\"/nsmc/model3/tf_naive\")",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------------------+----------+\n|label|               words|prediction|\n+-----+--------------------+----------+\n|    0|[더빙, 진짜, 짜증, 나, 네...|       0.0|\n|    1|[포스터, 초딩, 영화, 줄, ...|       0.0|\n|    0| [너무, 그래서, 보, 것, 추천]|       1.0|\n|    0|[교도소, 이야기, 구먼, 솔직...|       0.0|\n|    1|[사이몬, 페그, 익살, 연기,...|       1.0|\n|    0|[막, 뗀, 세, 초등, 학교,...|       0.0|\n|    0|[원작, 긴장감, 제대로, 살려...|       0.0|\n|    0|[별, 반개, 아깝, 욕, 나온...|       0.0|\n|    1|[액션, 없, 재미, 있, 몇,...|       0.0|\n|    1|[왜, 평점, 낮, 건데, 꽤,...|       1.0|\n|    1|[인피니트, 짱, 이, 진짜, ...|       1.0|\n|    1|[볼, 때, 눈물나, 죽, 년,...|       1.0|\n|    0|[울, 손들, 횡단보도, 건널,...|       0.0|\n|    1|[좋, 신문, 기사, 보다, 보...|       1.0|\n|    0|[취향, 존중, 진짜, 내생, ...|       0.0|\n|    1|      [ㄱ, 냥, 매번, 긴장]|       1.0|\n|    1|[참, 사람, 웃긴, 게, 바스...|       0.0|\n|    0|[굿바이, 레닌, 표절, 인, ...|       0.0|\n|    1|[이건, 정말, 깨알, 캐스팅,...|       1.0|\n|    1|[약탈자, 위한, 변명, 저놈,...|       0.0|\n+-----+--------------------+----------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521858428998_1742615254",
+      "id": "20180324-112708_226513235",
+      "dateCreated": "Mar 24, 2018 11:27:08 AM",
+      "dateStarted": "Mar 26, 2018 7:27:44 PM",
+      "dateFinished": "Mar 26, 2018 7:33:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 2. TF -\u003e SVM",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e2. TF -\u0026gt; SVM\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521859206578_239861551",
+      "id": "20180324-114006_306881034",
+      "dateCreated": "Mar 24, 2018 11:40:06 AM",
+      "dateStarted": "Mar 26, 2018 7:27:41 PM",
+      "dateFinished": "Mar 26, 2018 7:27:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.classification.LinearSVC\n\nval svm \u003d new LinearSVC()\n    .setMaxIter(10)\n    .setRegParam(0.1)\n \nval pipeline2 \u003d new Pipeline().setStages(Array(tokenizer, countVectorizer, svm))\nval model2 \u003d pipeline2.fit(training)\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.ml.classification.LinearSVC\nsvm: org.apache.spark.ml.classification.LinearSVC \u003d linearsvc_2cfd48615e59\npipeline2: org.apache.spark.ml.Pipeline \u003d pipeline_fd6c95b25f4d\nmodel2: org.apache.spark.ml.PipelineModel \u003d pipeline_fd6c95b25f4d\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521858877524_-1914377069",
+      "id": "20180324-113437_1696413271",
+      "dateCreated": "Mar 24, 2018 11:34:37 AM",
+      "dateStarted": "Mar 26, 2018 7:32:54 PM",
+      "dateFinished": "Mar 26, 2018 8:12:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "model2.transform(training).select(\"label\", \"words\",\"prediction\").show\n//모델 저장\nmodel2.write.overwrite().save(\"/nsmc/model3/tf_svm\")",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------------------+----------+\n|label|               words|prediction|\n+-----+--------------------+----------+\n|    0|[더빙, 진짜, 짜증, 나, 네...|       0.0|\n|    1|[포스터, 초딩, 영화, 줄, ...|       0.0|\n|    0| [너무, 그래서, 보, 것, 추천]|       1.0|\n|    0|[교도소, 이야기, 구먼, 솔직...|       0.0|\n|    1|[사이몬, 페그, 익살, 연기,...|       1.0|\n|    0|[막, 뗀, 세, 초등, 학교,...|       0.0|\n|    0|[원작, 긴장감, 제대로, 살려...|       0.0|\n|    0|[별, 반개, 아깝, 욕, 나온...|       0.0|\n|    1|[액션, 없, 재미, 있, 몇,...|       0.0|\n|    1|[왜, 평점, 낮, 건데, 꽤,...|       1.0|\n|    1|[인피니트, 짱, 이, 진짜, ...|       1.0|\n|    1|[볼, 때, 눈물나, 죽, 년,...|       1.0|\n|    0|[울, 손들, 횡단보도, 건널,...|       0.0|\n|    1|[좋, 신문, 기사, 보다, 보...|       1.0|\n|    0|[취향, 존중, 진짜, 내생, ...|       0.0|\n|    1|      [ㄱ, 냥, 매번, 긴장]|       1.0|\n|    1|[참, 사람, 웃긴, 게, 바스...|       1.0|\n|    0|[굿바이, 레닌, 표절, 인, ...|       0.0|\n|    1|[이건, 정말, 깨알, 캐스팅,...|       1.0|\n|    1|[약탈자, 위한, 변명, 저놈,...|       1.0|\n+-----+--------------------+----------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521859423987_108047564",
+      "id": "20180324-114343_1702721458",
+      "dateCreated": "Mar 24, 2018 11:43:43 AM",
+      "dateStarted": "Mar 26, 2018 7:33:08 PM",
+      "dateFinished": "Mar 26, 2018 8:12:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md \n## 3. TF-IDF -\u003e NaiveBayes",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e3. TF-IDF -\u0026gt; NaiveBayes\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521859829520_-1237853350",
+      "id": "20180324-115029_601147190",
+      "dateCreated": "Mar 24, 2018 11:50:29 AM",
+      "dateStarted": "Mar 26, 2018 7:27:42 PM",
+      "dateFinished": "Mar 26, 2018 7:27:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val idf \u003d new IDF().setInputCol(\"rawFeatures\").setOutputCol(\"features\")\n\nval pipeline3 \u003d new Pipeline().setStages(Array(tokenizer, countVectorizer2, idf, naive))\nval model3 \u003d pipeline3.fit(training)\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "idf: org.apache.spark.ml.feature.IDF \u003d idf_cf8e07a966b9\npipeline3: org.apache.spark.ml.Pipeline \u003d pipeline_8b9c8b439388\nmodel3: org.apache.spark.ml.PipelineModel \u003d pipeline_8b9c8b439388\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521859960310_-1994887588",
+      "id": "20180324-115240_1822404117",
+      "dateCreated": "Mar 24, 2018 11:52:40 AM",
+      "dateStarted": "Mar 26, 2018 8:12:29 PM",
+      "dateFinished": "Mar 26, 2018 8:18:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "model3.transform(training).select(\"label\", \"words\", \"prediction\").show\nmodel3.write.overwrite().save(\"/nsmc/model3/tf_idf_naive\")",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 8:12:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------------------+----------+\n|label|               words|prediction|\n+-----+--------------------+----------+\n|    0|[더빙, 진짜, 짜증, 나, 네...|       0.0|\n|    1|[포스터, 초딩, 영화, 줄, ...|       0.0|\n|    0| [너무, 그래서, 보, 것, 추천]|       1.0|\n|    0|[교도소, 이야기, 구먼, 솔직...|       0.0|\n|    1|[사이몬, 페그, 익살, 연기,...|       1.0|\n|    0|[막, 뗀, 세, 초등, 학교,...|       0.0|\n|    0|[원작, 긴장감, 제대로, 살려...|       0.0|\n|    0|[별, 반개, 아깝, 욕, 나온...|       0.0|\n|    1|[액션, 없, 재미, 있, 몇,...|       0.0|\n|    1|[왜, 평점, 낮, 건데, 꽤,...|       1.0|\n|    1|[인피니트, 짱, 이, 진짜, ...|       1.0|\n|    1|[볼, 때, 눈물나, 죽, 년,...|       1.0|\n|    0|[울, 손들, 횡단보도, 건널,...|       0.0|\n|    1|[좋, 신문, 기사, 보다, 보...|       1.0|\n|    0|[취향, 존중, 진짜, 내생, ...|       0.0|\n|    1|      [ㄱ, 냥, 매번, 긴장]|       1.0|\n|    1|[참, 사람, 웃긴, 게, 바스...|       1.0|\n|    0|[굿바이, 레닌, 표절, 인, ...|       0.0|\n|    1|[이건, 정말, 깨알, 캐스팅,...|       1.0|\n|    1|[약탈자, 위한, 변명, 저놈,...|       0.0|\n+-----+--------------------+----------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522059256082_847496626",
+      "id": "20180326-191416_461884783",
+      "dateCreated": "Mar 26, 2018 7:14:16 PM",
+      "dateStarted": "Mar 26, 2018 8:12:38 PM",
+      "dateFinished": "Mar 26, 2018 8:18:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 4. TF-IDF -\u003e SVM",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e4. TF-IDF -\u0026gt; SVM\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521983637462_2127293457",
+      "id": "20180325-221357_1301461540",
+      "dateCreated": "Mar 25, 2018 10:13:57 PM",
+      "dateStarted": "Mar 26, 2018 7:27:42 PM",
+      "dateFinished": "Mar 26, 2018 7:27:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val pipeline4 \u003d new Pipeline().setStages(Array(tokenizer, countVectorizer2, idf, svm))\nval model4 \u003d pipeline4.fit(training)\n\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "pipeline4: org.apache.spark.ml.Pipeline \u003d pipeline_e05977ec0914\nmodel4: org.apache.spark.ml.PipelineModel \u003d pipeline_e05977ec0914\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521983665526_-1321965108",
+      "id": "20180325-221425_1601376965",
+      "dateCreated": "Mar 25, 2018 10:14:25 PM",
+      "dateStarted": "Mar 26, 2018 8:18:49 PM",
+      "dateFinished": "Mar 26, 2018 9:11:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "model4.transform(training).select(\"label\", \"words\", \"prediction\").show\nmodel4.write.overwrite().save(\"/nsmc/model3/tf_idf_svm\")",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 8:18:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------------------+----------+\n|label|               words|prediction|\n+-----+--------------------+----------+\n|    0|[더빙, 진짜, 짜증, 나, 네...|       0.0|\n|    1|[포스터, 초딩, 영화, 줄, ...|       0.0|\n|    0| [너무, 그래서, 보, 것, 추천]|       1.0|\n|    0|[교도소, 이야기, 구먼, 솔직...|       0.0|\n|    1|[사이몬, 페그, 익살, 연기,...|       1.0|\n|    0|[막, 뗀, 세, 초등, 학교,...|       0.0|\n|    0|[원작, 긴장감, 제대로, 살려...|       0.0|\n|    0|[별, 반개, 아깝, 욕, 나온...|       0.0|\n|    1|[액션, 없, 재미, 있, 몇,...|       0.0|\n|    1|[왜, 평점, 낮, 건데, 꽤,...|       1.0|\n|    1|[인피니트, 짱, 이, 진짜, ...|       1.0|\n|    1|[볼, 때, 눈물나, 죽, 년,...|       1.0|\n|    0|[울, 손들, 횡단보도, 건널,...|       0.0|\n|    1|[좋, 신문, 기사, 보다, 보...|       1.0|\n|    0|[취향, 존중, 진짜, 내생, ...|       0.0|\n|    1|      [ㄱ, 냥, 매번, 긴장]|       1.0|\n|    1|[참, 사람, 웃긴, 게, 바스...|       1.0|\n|    0|[굿바이, 레닌, 표절, 인, ...|       0.0|\n|    1|[이건, 정말, 깨알, 캐스팅,...|       1.0|\n|    1|[약탈자, 위한, 변명, 저놈,...|       1.0|\n+-----+--------------------+----------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522059330230_1175610816",
+      "id": "20180326-191530_255729637",
+      "dateCreated": "Mar 26, 2018 7:15:30 PM",
+      "dateStarted": "Mar 26, 2018 8:18:58 PM",
+      "dateFinished": "Mar 26, 2018 9:11:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 5.word2Vec -\u003e LogisticRegression",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e5.word2Vec -\u0026gt; LogisticRegression\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521983739245_-599917305",
+      "id": "20180325-221539_1924717108",
+      "dateCreated": "Mar 25, 2018 10:15:39 PM",
+      "dateStarted": "Mar 26, 2018 7:27:43 PM",
+      "dateFinished": "Mar 26, 2018 7:27:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.classification.LogisticRegression\n\nval word2Vec \u003d new Word2Vec()\n    .setInputCol(\"words\")\n    .setOutputCol(\"features\")\n    .setVectorSize(300)\n    \nval lr \u003d new LogisticRegression()\n  .setMaxIter(10)\n  .setRegParam(0.3)\n  .setElasticNetParam(0.8)\n \n \nval pipeline5 \u003d new Pipeline().setStages(Array(tokenizer, word2Vec, lr))\nval model5 \u003d pipeline5.fit(training)\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 9:12:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.ml.classification.LogisticRegression\nword2Vec: org.apache.spark.ml.feature.Word2Vec \u003d w2v_62675e99763b\nlr: org.apache.spark.ml.classification.LogisticRegression \u003d logreg_6f2003d7c725\npipeline5: org.apache.spark.ml.Pipeline \u003d pipeline_a49bf5c02e87\nmodel5: org.apache.spark.ml.PipelineModel \u003d pipeline_a49bf5c02e87\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521983776952_-699689863",
+      "id": "20180325-221616_848834411",
+      "dateCreated": "Mar 25, 2018 10:16:16 PM",
+      "dateStarted": "Mar 26, 2018 9:12:14 PM",
+      "dateFinished": "Mar 26, 2018 9:20:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "model5.transform(training).select(\"label\", \"words\", \"prediction\").show\nmodel5.write.overwrite().save(\"/nsmc/model3/word2Vec_lr\")\n// 예측률이 많이 낮아 보인다.\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 9:39:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------------------+----------+\n|label|               words|prediction|\n+-----+--------------------+----------+\n|    0|[더빙, 진짜, 짜증, 나, 네...|       0.0|\n|    1|[포스터, 초딩, 영화, 줄, ...|       0.0|\n|    0| [너무, 그래서, 보, 것, 추천]|       0.0|\n|    0|[교도소, 이야기, 구먼, 솔직...|       0.0|\n|    1|[사이몬, 페그, 익살, 연기,...|       0.0|\n|    0|[막, 뗀, 세, 초등, 학교,...|       0.0|\n|    0|[원작, 긴장감, 제대로, 살려...|       0.0|\n|    0|[별, 반개, 아깝, 욕, 나온...|       0.0|\n|    1|[액션, 없, 재미, 있, 몇,...|       0.0|\n|    1|[왜, 평점, 낮, 건데, 꽤,...|       0.0|\n|    1|[인피니트, 짱, 이, 진짜, ...|       0.0|\n|    1|[볼, 때, 눈물나, 죽, 년,...|       0.0|\n|    0|[울, 손들, 횡단보도, 건널,...|       0.0|\n|    1|[좋, 신문, 기사, 보다, 보...|       0.0|\n|    0|[취향, 존중, 진짜, 내생, ...|       0.0|\n|    1|      [ㄱ, 냥, 매번, 긴장]|       0.0|\n|    1|[참, 사람, 웃긴, 게, 바스...|       0.0|\n|    0|[굿바이, 레닌, 표절, 인, ...|       0.0|\n|    1|[이건, 정말, 깨알, 캐스팅,...|       0.0|\n|    1|[약탈자, 위한, 변명, 저놈,...|       0.0|\n+-----+--------------------+----------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522059447815_1992381302",
+      "id": "20180326-191727_1158631353",
+      "dateCreated": "Mar 26, 2018 7:17:27 PM",
+      "dateStarted": "Mar 26, 2018 9:12:31 PM",
+      "dateFinished": "Mar 26, 2018 9:20:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## 6. word2Vec -\u003e SVM",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 9:12:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e6. word2Vec -\u0026gt; SVM\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521984509854_-1202718664",
+      "id": "20180325-222829_5424230",
+      "dateCreated": "Mar 25, 2018 10:28:29 PM",
+      "dateStarted": "Mar 26, 2018 9:12:38 PM",
+      "dateFinished": "Mar 26, 2018 9:12:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " \nval pipeline6 \u003d new Pipeline().setStages(Array(tokenizer, word2Vec, svm))\nval model6 \u003d pipeline6.fit(training)\n\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 9:21:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "pipeline6: org.apache.spark.ml.Pipeline \u003d pipeline_803384d54f01\nmodel6: org.apache.spark.ml.PipelineModel \u003d pipeline_803384d54f01\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521984526876_2116925495",
+      "id": "20180325-222846_1868687938",
+      "dateCreated": "Mar 25, 2018 10:28:46 PM",
+      "dateStarted": "Mar 26, 2018 9:21:08 PM",
+      "dateFinished": "Mar 26, 2018 10:32:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "model6.transform(training).select(\"label\", \"words\", \"prediction\").show\nmodel6.write.overwrite().save(\"/nsmc/model3/word2Vec_svm\")",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 9:21:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----+--------------------+----------+\n|label|               words|prediction|\n+-----+--------------------+----------+\n|    0|[더빙, 진짜, 짜증, 나, 네...|       0.0|\n|    1|[포스터, 초딩, 영화, 줄, ...|       0.0|\n|    0| [너무, 그래서, 보, 것, 추천]|       1.0|\n|    0|[교도소, 이야기, 구먼, 솔직...|       0.0|\n|    1|[사이몬, 페그, 익살, 연기,...|       1.0|\n|    0|[막, 뗀, 세, 초등, 학교,...|       0.0|\n|    0|[원작, 긴장감, 제대로, 살려...|       0.0|\n|    0|[별, 반개, 아깝, 욕, 나온...|       0.0|\n|    1|[액션, 없, 재미, 있, 몇,...|       0.0|\n|    1|[왜, 평점, 낮, 건데, 꽤,...|       1.0|\n|    1|[인피니트, 짱, 이, 진짜, ...|       1.0|\n|    1|[볼, 때, 눈물나, 죽, 년,...|       1.0|\n|    0|[울, 손들, 횡단보도, 건널,...|       0.0|\n|    1|[좋, 신문, 기사, 보다, 보...|       0.0|\n|    0|[취향, 존중, 진짜, 내생, ...|       0.0|\n|    1|      [ㄱ, 냥, 매번, 긴장]|       0.0|\n|    1|[참, 사람, 웃긴, 게, 바스...|       0.0|\n|    0|[굿바이, 레닌, 표절, 인, ...|       0.0|\n|    1|[이건, 정말, 깨알, 캐스팅,...|       0.0|\n|    1|[약탈자, 위한, 변명, 저놈,...|       0.0|\n+-----+--------------------+----------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522059587102_2029148630",
+      "id": "20180326-191947_966839279",
+      "dateCreated": "Mar 26, 2018 7:19:47 PM",
+      "dateStarted": "Mar 26, 2018 9:21:16 PM",
+      "dateFinished": "Mar 26, 2018 10:32:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# 모델 성능 평가",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003e모델 성능 평가\u003c/h1\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521984826385_-1416378541",
+      "id": "20180325-223346_1315563096",
+      "dateCreated": "Mar 25, 2018 10:33:46 PM",
+      "dateStarted": "Mar 26, 2018 7:27:44 PM",
+      "dateFinished": "Mar 26, 2018 7:27:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\nimport org.apache.spark.ml.classification.ClassificationModel\n\n\nval evaluator \u003d new MulticlassClassificationEvaluator()\n    .setMetricName(\"accuracy\").setPredictionCol(\"prediction\").setLabelCol(\"label\")",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 10:33:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator\nimport org.apache.spark.ml.classification.ClassificationModel\nevaluator: org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator \u003d mcEval_77ad7803f762\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521984848732_1491599618",
+      "id": "20180325-223408_2076891276",
+      "dateCreated": "Mar 25, 2018 10:34:08 PM",
+      "dateStarted": "Mar 26, 2018 10:33:00 PM",
+      "dateFinished": "Mar 26, 2018 10:33:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//training 데이터에 모델 적용\nval train_tfNaive \u003d model1.transform(training)\nval train_tfSvm \u003d model2.transform(training)\nval train_tfIdfNaive \u003d model3.transform(training)\nval train_tfIdfSvm \u003d model4.transform(training)\nval train_word2VecLr \u003d model5.transform(training)\nval train_word2VecSvm \u003d model6.transform(training)\n\n//test 데이터에 모델 적용\nval test_tfNaive \u003d model1.transform(test)\nval test_tfSvm \u003d model2.transform(test)\nval test_tfIdfNaive \u003d model3.transform(test)\nval test_tfIdfSvm \u003d model4.transform(test)\nval test_word2VecLr \u003d model5.transform(test)\nval test_word2VecSvm \u003d model6.transform(test)\n\n//training 데이터 평가\nval train_tfNaive_eval \u003d evaluator.evaluate(train_tfNaive)\nval train_tfSvm_eval \u003d evaluator.evaluate(train_tfSvm)\nval train_tfIdfNaive_eval \u003d evaluator.evaluate(train_tfIdfNaive)\nval train_tfIdfSvm_eval \u003d evaluator.evaluate(train_tfIdfSvm)\nval train_word2VecLr_eval \u003d evaluator.evaluate(train_word2VecLr)\nval train_word2VecSvm_eval \u003d evaluator.evaluate(train_word2VecSvm)\n\n//test 데이터 평가가\nval test_tfNaive_eval \u003d evaluator.evaluate(test_tfNaive)\nval test_tfSvm_eval \u003d evaluator.evaluate(test_tfSvm)\nval test_tfIdfNaive_eval \u003d evaluator.evaluate(test_tfIdfNaive)\nval test_tfIdfSvm_eval \u003d evaluator.evaluate(test_tfIdfSvm)\nval test_word2VecLr_eval \u003d evaluator.evaluate(test_word2VecLr)\nval test_word2VecSvm_eval \u003d evaluator.evaluate(test_word2VecSvm)\n\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 11:38:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "train_tfNaive: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntrain_tfSvm: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 5 more fields]\ntrain_tfIdfNaive: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 7 more fields]\ntrain_tfIdfSvm: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntrain_word2VecLr: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntrain_word2VecSvm: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 5 more fields]\ntest_tfNaive: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntest_tfSvm: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 5 more fields]\ntest_tfIdfNaive: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 7 more fields]\ntest_tfIdfSvm: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntest_word2VecLr: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 6 more fields]\ntest_word2VecSvm: org.apache.spark.sql.DataFrame \u003d [id: int, document: string ... 5 more fields]\ntrain_tfNaive_eval: Double \u003d 0.8484816160538685\ntrain_tfSvm_eval: Double \u003d 0.8872362412080402\ntrain_tfIdfNaive_eval: Double \u003d 0.8578885962865429\ntrain_tfIdfSvm_eval: Double \u003d 0.8872095736524551\ntrain_word2VecLr_eval: Double \u003d 0.5011500383346111\ntrain_word2VecSvm_eval: Double \u003d 0.7880662688756291\ntest_tfNaive_eval: Double \u003d 0.822851396302313\ntest_tfSvm_eval: Double \u003d 0.8177973750032232\ntest_tfIdfNaive_eval: Double \u003d 0.8046208194734535\ntest_tfIdfSvm_eval: Double \u003d 0.8180810190557232\ntest_word2VecLr_eval: Double \u003d 0.49446894097625127\ntest_word2VecSvm_eval: Double \u003d 0.7868028158118666\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521984879577_1930444872",
+      "id": "20180325-223439_832824426",
+      "dateCreated": "Mar 25, 2018 10:34:39 PM",
+      "dateStarted": "Mar 26, 2018 10:33:07 PM",
+      "dateFinished": "Mar 26, 2018 11:30:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val eval \u003d spark.createDataFrame(\n        Seq(\n            (\"TF\", \"NaiveBayes\", train_tfNaive_eval, test_tfNaive_eval),\n            (\"TF\", \"SVM\", train_tfSvm_eval, test_tfSvm_eval),\n            (\"TF-IDF\", \"NaiveBayes\", train_tfIdfNaive_eval, test_tfIdfNaive_eval),\n            (\"TF-IDF\", \"SVM\", train_tfIdfSvm_eval, test_tfIdfSvm_eval),\n            (\"Word2Vec\", \"LogisticRegression\",train_word2VecLr_eval, test_word2VecLr_eval),\n           (\"Word2Vec\", \"SVM\", train_word2VecSvm_eval, test_word2VecSvm_eval))\n        ).toDF(\"features\", \"algorithm\", \"training_acc\", \"test_acc\")\neval.createOrReplaceTempView(\"evaluate\")\n        ",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 11:31:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "eval: org.apache.spark.sql.DataFrame \u003d [features: string, algorithm: string ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521985091575_2081159695",
+      "id": "20180325-223811_1504832997",
+      "dateCreated": "Mar 25, 2018 10:38:11 PM",
+      "dateStarted": "Mar 26, 2018 11:31:39 PM",
+      "dateFinished": "Mar 26, 2018 11:31:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect * from evaluate",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 11:31:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "features\talgorithm\ttraining_acc\ttest_acc\nTF\tNaiveBayes\t0.8484816160538685\t0.822851396302313\nTF\tSVM\t0.8872362412080402\t0.8177973750032232\nTF-IDF\tNaiveBayes\t0.8578885962865429\t0.8046208194734535\nTF-IDF\tSVM\t0.8872095736524551\t0.8180810190557232\nWord2Vec\tLogisticRegression\t0.5011500383346111\t0.49446894097625127\nWord2Vec\tSVM\t0.7880662688756291\t0.7868028158118666\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521985463098_-302975997",
+      "id": "20180325-224423_1933017755",
+      "dateCreated": "Mar 25, 2018 10:44:23 PM",
+      "dateStarted": "Mar 26, 2018 11:31:47 PM",
+      "dateFinished": "Mar 26, 2018 11:31:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n# 정리\n1. 새로운 모델을 적용해 봤지만 90% 이상의 높은 accuracy는 나오지 않았다.\n2. 감성분석에 word2Vec로 feature를 만드는 것이 더 어울릴 것으로 생각했지만 예상보다 낮은 성능을 보였다.\n3. 남은 과제로 예측 실패한 것들을 살펴봐서 실패한 이유를 확인하고 파라미터를 변경하여 모델 튜닝을 시도해보자.\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 11:36:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003e정리\u003c/h1\u003e\n\u003col\u003e\n  \u003cli\u003e새로운 모델을 적용해 봤지만 90% 이상의 높은 accuracy는 나오지 않았다.\u003c/li\u003e\n  \u003cli\u003e감성분석에 word2Vec로 feature를 만드는 것이 더 어울릴 것으로 생각했지만 예상보다 낮은 성능을 보였다.\u003c/li\u003e\n  \u003cli\u003e남은 과제로 예측 실패한 것들을 살펴봐서 실패한 이유를 확인하고 파라미터를 변경하여 모델 튜닝을 시도해보자.\u003c/li\u003e\n\u003c/ol\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521995691748_2105632706",
+      "id": "20180326-013451_1482892171",
+      "dateCreated": "Mar 26, 2018 1:34:51 AM",
+      "dateStarted": "Mar 26, 2018 11:36:35 PM",
+      "dateFinished": "Mar 26, 2018 11:36:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n",
+      "user": "admin",
+      "dateUpdated": "Mar 26, 2018 7:27:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1521995654063_1876460279",
+      "id": "20180326-013414_2023988527",
+      "dateCreated": "Mar 26, 2018 1:34:14 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/nsmc/new_model",
+  "id": "2DA7CVHSW",
+  "angularObjects": {
+    "2DAKZ4JFV:shared_process": [],
+    "2D8UPKGZ2:shared_process": [],
+    "2D7Q7VD92:shared_process": [],
+    "2D7TAA1C6:shared_process": [],
+    "2DA3VREDC:shared_process": [],
+    "2D9R4PBAQ:shared_process": [],
+    "2D94JT64U:shared_process": [],
+    "2DA2EUF23:shared_process": [],
+    "2D89A9FT6:shared_process": [],
+    "2D9BS92K4:shared_process": [],
+    "2D92T4AJW:shared_process": [],
+    "2D7RB1S8H:shared_process": [],
+    "2DA7G17QK:shared_process": [],
+    "2D7TVXK1B:shared_process": [],
+    "2DBABNZRX:shared_process": [],
+    "2DAK1PD75:shared_process": [],
+    "2D7TJDCJH:shared_process": [],
+    "2DA2KF3JQ:shared_process": [],
+    "2DA3DUDW2:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
